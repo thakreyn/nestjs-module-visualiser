@@ -1,7 +1,5 @@
 import fs from "fs";
-
-const ELK_RENDERER: string =
-  "%%{init: {'flowchart': {'defaultRenderer': 'elk'}}}%%\n";
+import { DiagramBuilder } from "./DiagramBuilder";
 
 /**
  * Generates a Mermaid diagram representation of module dependencies and writes it to a file.
@@ -14,30 +12,29 @@ const ELK_RENDERER: string =
  * @param moduleData
  */
 export function generateMermaidDiagram(moduleData: any[]) {
-  let diagram = ELK_RENDERER + "graph TD\n";
+  let diagramBuilder = new DiagramBuilder();
 
-  // TODO: Create builders for building each line of the chart instead of hardcoding strings
   moduleData.forEach((module) => {
     const moduleName = module.name;
-    diagram += `  ${moduleName}\n`;
+    diagramBuilder.addModule(moduleName);
 
     module.imports.forEach((importedModule: any) => {
-      diagram += `${importedModule} -->|imports| ${moduleName}\n`;
+      diagramBuilder.addImport(moduleName, importedModule);
     });
 
     module.providers.forEach((provider: any) => {
-      diagram += `  ${moduleName} -->|provides| ${provider}\n`;
+      diagramBuilder.addProvider(moduleName, provider);
     });
 
     module.controllers.forEach((controller: any) => {
-      diagram += `  ${moduleName} -->|controls| ${controller}\n`;
+      diagramBuilder.addController(moduleName, controller);
     });
 
-    module.exports.forEach((exp: any) => {
-      diagram += `  ${moduleName} -->|exports| ${exp}\n`;
+    module.exports.forEach((exports: any) => {
+      diagramBuilder.addExport(moduleName, exports);
     });
   });
 
   // TODO: Future scope: Add option to set output filename
-  fs.writeFileSync("output.mmd", diagram);
+  fs.writeFileSync("output.mmd", diagramBuilder.build());
 }

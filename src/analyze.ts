@@ -4,8 +4,9 @@ import * as babelParser from "@babel/parser";
 import traverse from "@babel/traverse";
 import { NodePath } from "@babel/traverse";
 import * as t from "@babel/types";
-import { generateMermaidDiagram } from "./generateMermaid";
+import { generateMermaidDiagram } from "./mermaid/generateMermaid";
 
+const identifiedModules = {};
 /**
  * Parent function that calls smaller functions responsible for walking the code, filtering modules
  * and generating mermaid diagram
