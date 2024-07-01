@@ -1,0 +1,8 @@
+# Node modules
+node_modules/
+
+# Dist
+dist/
+
+# Mermaid output files
+*.mmd
