@@ -16,6 +16,7 @@ const identifiedModules = {};
  */
 export function analyzeProject(
   projectPath: string,
+  outputFileName: string | "output.mmd",
   include?: string[] | undefined,
   exclude?: string[] | undefined
 ) {
@@ -31,7 +32,7 @@ export function analyzeProject(
   const filteredModuleData = filterModules(moduleData, include, exclude);
 
   // Generate mermaid diagram for the final module data
-  generateMermaidDiagram(filteredModuleData);
+  generateMermaidDiagram(filteredModuleData, outputFileName);
 }
 
 /**

@@ -11,7 +11,10 @@ import { DiagramBuilder } from "./DiagramBuilder";
  *
  * @param moduleData
  */
-export function generateMermaidDiagram(moduleData: any[]) {
+export function generateMermaidDiagram(
+  moduleData: any[],
+  outputFileName: string
+) {
   let diagramBuilder = new DiagramBuilder();
 
   moduleData.forEach((module) => {
@@ -35,6 +38,5 @@ export function generateMermaidDiagram(moduleData: any[]) {
     });
   });
 
-  // TODO: Future scope: Add option to set output filename
-  fs.writeFileSync("output.mmd", diagramBuilder.build());
+  fs.writeFileSync(outputFileName, diagramBuilder.build());
 }

@@ -18,8 +18,14 @@ program
     "Comma-separated list of modules to exclude. Eg: Module1,Module2",
     (val) => val.split(",")
   )
+  .option("-o, --output <file>", "Name of the output file. Eg: mermaid.mmd")
   .action((projectPath, options) => {
-    analyzeProject(projectPath, options.include, options.exclude);
+    analyzeProject(
+      projectPath,
+      options.output,
+      options.include,
+      options.exclude
+    );
   });
 
 program.parse(process.argv);
